@@ -1,0 +1,384 @@
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+}
+
+/* https://vegaprotocol.github.io/alpha-lyrae/ */
+
+@font-face {
+	font-family: 'AlphaLyrae';
+	src: url('../fonts/AlphaLyrae-Medium.woff2') format('woff2'),
+	url('../fonts/AlphaLyrae-Medium.woff') format('woff');
+	font-style: normal;
+}
+
+@font-feature-values 'AlphaLyrae' { 
+  @styleset { ss01: 1; ss02: 2; ss03: 3; ss04: 4; ss05: 5 } 
+}
+
+:root {
+	font-size: 13px;
+	--color-text: #fff;
+	--color-bg: #000;
+	--color-link: #fff;
+	--color-link-hover: #fff;
+	--img-width: 190px;
+	--img-ratio: 1.1;
+	--img-offset-x: 20px;
+	--img-offset-y: 20px;
+	--img-border-radius: 7px;
+	--color-bg-content: rgba(255,255,255,0.05);
+	--color-bg-demos: rgba(255,255,255,0.05);
+}
+
+body {
+	margin: 0;
+	color: var(--color-text);
+	background-color: var(--color-bg);
+	font-family: 'AlphaLyrae', sans-serif;
+	text-transform: uppercase;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	overflow: hidden;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	min-height: 100vh;
+	/* mobile viewport bug fix */
+	min-height: -webkit-fill-available;
+}
+
+html {
+	height: -webkit-fill-available;
+}
+
+.demo-3 {
+	--img-width: 160px;
+	--img-ratio: 0.7;
+}
+
+.demo-4 {
+	--img-ratio: 1;
+}
+
+.demo-5 {
+	--img-width: 230px;
+	--img-ratio: 1.2;
+}
+
+.demo-6 {
+	--color-bg: #000;
+	--img-ratio: 0.85;
+	--img-border-radius: 0px;
+}
+
+.demo-7 {
+	--img-ratio: 1;
+	--img-border-radius: 4px;
+}
+
+.demo-8 {
+	--img-width: 175px;
+	--img-ratio: 1;
+	--img-border-radius: 4px;
+}
+
+.demo-9 {
+	--img-width: 260px;
+	--img-ratio: 1;
+}
+
+/* Page Loader */
+.js .loading::before,
+.js .loading::after {
+	content: '';
+	position: fixed;
+	z-index: 2000;
+}
+
+.js .loading::before {
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: var(--color-bg);
+}
+
+.js .loading::after {
+	top: 50%;
+	left: 50%;
+	width: 60px;
+	height: 60px;
+	margin: -30px 0 0 -30px;
+	border-radius: 50%;
+	opacity: 0.4;
+	background: var(--color-link);
+	animation: loaderAnim 0.7s linear infinite alternate forwards;
+
+}
+
+@keyframes loaderAnim {
+	to {
+		opacity: 1;
+		transform: scale3d(0.5,0.5,1);
+	}
+}
+
+a {
+	text-decoration: none;
+	color: var(--color-link);
+	outline: none;
+	cursor: pointer;
+}
+
+a:hover {
+	color: var(--color-link-hover);
+	outline: none;
+}
+
+/* Better focus styles from https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible */
+a:focus {
+	/* Provide a fallback style for browsers
+	 that don't support :focus-visible */
+	outline: none;
+	background: lightgrey;
+}
+
+a:focus:not(:focus-visible) {
+	/* Remove the focus indicator on mouse-focus for browsers
+	 that do support :focus-visible */
+	background: inherit;
+}
+
+a:focus-visible {
+	/* Draw a very noticeable focus style for
+	 keyboard-focus on browsers that do support
+	 :focus-visible */
+	outline: 2px solid red;
+	background: transparent;
+}
+
+.unbutton {
+	background: none;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	font: inherit;
+	cursor: pointer;
+}
+
+.unbutton:focus {
+	outline: none;
+}
+
+main {
+	padding: 1.25rem;
+	display: grid;
+	height: 100vh;
+	width: 100%;
+	grid-row-gap: 1.25rem;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto 1fr auto auto;
+	grid-template-areas: 'frame' 'content' 'meta' 'demos';
+}
+
+.meta {
+	grid-area: meta;
+}
+
+.meta__title {
+	margin: 0;
+	font-size: clamp(2rem,5vw,5rem);
+	font-weight: 300;
+}
+
+.meta__subtitle {
+	margin: 0;
+}
+
+.demos {
+	position: relative;
+	text-align: right;
+	grid-area: demos;
+	background: var(--color-bg-demos);
+	border-radius: 8px;
+	padding: 0.5rem;
+	display: flex;
+	grid-column-gap: 0.5rem;
+	grid-row-gap: 0.5rem;
+	align-items: flex-end;
+	align-content: flex-end;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	z-index: 200;
+}
+
+.demos span {
+	width: 100%;
+}
+
+.demo {
+	background: var(--color-bg);
+	aspect-ratio: 1;
+	flex: none;
+	width: 3rem;
+	display: grid;
+	place-items: center;
+	text-align: center;
+	border-radius: 5px;
+}
+
+.demo--current {
+	color: rgba(255,255,255,0.5);
+}
+
+.frame {
+	grid-area: frame;
+	z-index: 1000;
+	position: relative;
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-template-areas: 'title title' 'prev back' 'sponsor sponsor';
+	grid-gap: 0.5rem;
+}
+
+body #cdawrap {
+    justify-self: start;
+}
+
+.frame a {
+	pointer-events: auto;
+}
+
+.frame__title {
+	grid-area: title;
+	font-size: inherit;
+	margin: 0;
+	font-weight: inherit;
+}
+
+.frame__back {
+	grid-area: back;
+}
+
+.frame__prev {
+	grid-area: prev;
+}
+
+.content {
+	grid-area: content;
+	border-radius: 8px;
+	background: var(--color-bg-content);
+	position: relative;
+	z-index: 100;
+}
+
+.content__img {
+	width: var(--img-width);
+	aspect-ratio: var(--img-ratio);
+	border-radius: var(--img-border-radius);
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	overflow: hidden;
+	will-change: transform, filter;
+}
+
+.demo-7 .content__img {
+	mix-blend-mode: screen;
+}
+
+.demo-8 .content__img {
+	overflow: visible;
+}
+
+.content__img-inner {
+	background-position: 50% 50%;
+	width: calc(100% + var(--img-offset-x));
+	height: calc(100% + var(--img-offset-y));
+	background-size: cover;
+	position: absolute;
+	top: calc( -1 * var(--img-offset-y) / 2 );
+	left: calc( -1 * var(--img-offset-x) / 2 );
+}
+
+@supports(font-variant-alternates: styleset(ss02)) {
+  .show-if-variant-alternates-supported {
+    color: #f00;
+  }
+
+  .hide-if-variant-alternates-supported {
+    display: none;
+  } 
+
+  .show-if-no-variant-alternates-supported {
+    display: none;
+  }
+}
+
+@supports not (font-variant-alternates: styleset(ss02)) {
+  .hide-if-no-variant-alternates-support {
+    display: none;
+  }
+
+  .show-if-no-variant-alternates-supported {
+    color: #f00;
+  }
+
+}
+
+.ss01 {
+  font-variant-alternates: styleset(ss01);
+}
+
+.ss02 {
+  font-variant-alternates: styleset(ss02);
+}
+
+.ss03 {
+  font-variant-alternates: styleset(ss03);
+}
+
+.ss04 {
+  font-variant-alternates: styleset(ss04);
+}
+
+.ss05 {
+  font-variant-alternates: styleset(ss05);
+}
+
+@media screen and (min-width: 53em) {
+	main {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto 1fr auto;
+		grid-template-areas: 'frame frame' 'content content' 'meta demos';
+	}
+	.frame {
+		grid-template-columns: auto auto auto 1fr;
+		grid-template-areas:  'title back prev sponsor';
+		align-content: space-between;
+		align-items: end;
+		grid-gap: 2rem;
+	}
+
+	.frame__title::after {
+		content: '_';
+	}
+	.frame__title::before {
+		content: '_';
+	}
+	.demos {
+		justify-self: end;
+		grid-column-gap: 0.5rem;
+		grid-row-gap: 1rem;
+		padding: 1rem;
+	}
+
+	body #cdawrap {
+    	justify-self: end;
+	}
+}
